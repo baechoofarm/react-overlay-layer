@@ -4,11 +4,15 @@
   "description": "React Overlay Layer",
   "main": "dist/main.js",
   "typings": "dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "eslint": "eslint .",
     "eslint-quiet-fix": "eslint . --quiet --fix",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "bulid": "rollup -c rollup.config.js"
   },
   "keywords": [
     "react",
