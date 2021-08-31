@@ -8,6 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "downlevelIteration": true,
+    "esModuleInterop": true,
     "allowJs": false,
     "strict": true,
     "declaration": true,

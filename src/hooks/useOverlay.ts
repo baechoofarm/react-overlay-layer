@@ -1,16 +1,24 @@
-import {useCallback, useMemo} from "react";
-import {OverlayOption, OverlayRenderer, OverlayStore} from "../internal";
+import {useCallback, useEffect, useMemo, useState} from "react";
+import {Overlay, OverlayOption, OverlayRenderer, OverlayStore} from "../internal";
 
-let idIndex = 1;
+export function useOverlay(renderer: OverlayRenderer, initialOption?: OverlayOption) {
+    const [overlay] = useState(() => new Overlay(renderer, initialOption));
+    const [mounted, setMounted] = useState(false);
 
-export function useOverlay(renderer: OverlayRenderer, option?: OverlayOption) {
-    const id = useMemo(() => idIndex++, []);
-    const overlay = useMemo(() => (
-        OverlayStore.instance.use(id, renderer, option)
-    ), [id, renderer, option]);
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
-    const open = useCallback(() => overlay.open(), [overlay]);
-    const close = useCallback(() => overlay.close(), [overlay]);
+    useEffect(() => {
+        OverlayStore.instance.register(overlay);
+        return () => overlay.remove();
+    }, [overlay]);
 
-    return {open, close};
+    useEffect(() => {
+        if (mounted) {
+            overlay.updateRenderer(renderer);
+        }
+    }, [mounted, overlay, renderer]);
+
+    return overlay;
 }

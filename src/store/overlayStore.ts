@@ -1,46 +1,32 @@
-import {Overlay, OverlayOption, OverlayRenderer, OverlayRenderOrder} from "../internal";
-
-type OverlayListListener = (items: Overlay[]) => void;
-
-let listenerIdIndex = 0;
+import {action, computed, makeObservable, observable} from "mobx";
+import {Overlay, OverlayId, OverlayRenderOrder} from "../internal";
 
 export class OverlayStore {
-    private readonly overlays = new Map<number, Overlay>();
-    private readonly listeners = new Map<number, OverlayListListener>();
+    private readonly overlays = observable.map<OverlayId, Overlay>();
 
     private constructor() {
-
+        makeObservable(this, {
+            register: action,
+            remove: action,
+            items: computed,
+            openedItems: computed
+        });
     }
 
-    use(id: number, renderer: OverlayRenderer, option?: OverlayOption) {
-        if (this.overlays.has(id)) {
-            this.overlays.get(id)?.remove();
-        }
-        const overlay = new Overlay(id, renderer, option);
-
-        this.overlays.set(id, overlay);
-        this.updateListener();
-
-        return overlay;
+    register(overlay: Overlay) {
+        this.overlays.set(overlay.id, overlay);
     }
 
-    remove(id: number) {
+    remove(id: OverlayId) {
         this.overlays.delete(id);
-        this.updateListener();
     }
 
-    subscribe(listener: OverlayListListener): number {
-        this.listeners.set(++listenerIdIndex, listener);
-        return listenerIdIndex;
+    open(id: OverlayId) {
+        this.overlays.get(id)?.open();
     }
 
-    unsubscribe(id: number) {
-        this.listeners.delete(id);
-    }
-
-    private updateListener() {
-        const {items} = this;
-        this.listeners.forEach(listener => listener(items));
+    close(id: OverlayId) {
+        this.overlays.get(id)?.close();
     }
 
     get items() {
@@ -48,8 +34,10 @@ export class OverlayStore {
         const fast: Overlay[] = [];
         const late: Overlay[] = [];
 
+        console.log(this.overlays);
+
         this.overlays.forEach(overlay => {
-            switch (overlay.order) {
+            switch (overlay.option.order) {
                 case OverlayRenderOrder.FAST:
                     fast.push(overlay);
                     break;
@@ -62,6 +50,10 @@ export class OverlayStore {
             }
         });
         return [...fast, ...normal, ...late];
+    }
+
+    get openedItems() {
+        return this.items.filter(v => v?.opened);
     }
 
     private static _instance: OverlayStore;

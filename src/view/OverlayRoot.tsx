@@ -1,11 +1,12 @@
 import React from "react";
+import {observer} from "mobx-react-lite";
 import {OverlayLayer, useOverlayItems} from "../internal";
 
 interface Props {
     id?: string;
 }
 
-const OverlayRoot: React.FC<Props> = ({id}) => {
+const OverlayRoot: React.FC<Props> = observer(({id}) => {
     const items = useOverlayItems();
 
     return (
@@ -19,10 +20,13 @@ const OverlayRoot: React.FC<Props> = ({id}) => {
             }}
         >
             {items?.map(overlay => (
-                <OverlayLayer key={overlay.id} overlay={overlay}/>
+                <OverlayLayer
+                    key={overlay.id.description}
+                    overlay={overlay}
+                />
             )) ?? []}
         </div>
     );
-};
+});
 
 export {OverlayRoot};
