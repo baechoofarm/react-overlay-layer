@@ -1,6 +1,6 @@
 {
   "name": "react-overlay-layer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React Overlay Layer",
   "main": "dist/main.js",
   "typings": "dist/main.d.ts",
