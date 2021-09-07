@@ -36,6 +36,14 @@ export class Overlay {
         });
     }
 
+    readonly opener = () => {
+        if (this.opened) {
+            this.open();
+        } else {
+            this.close();
+        }
+    };
+
     open() {
         this._opened = true;
     }
