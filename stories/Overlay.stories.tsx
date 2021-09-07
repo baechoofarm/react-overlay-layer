@@ -8,7 +8,7 @@ export default {
 const Template: React.FC = () => {
     const overlay = useOverlay(ov => {
         return (
-            <div style={{width: 300, height: 300, background: 'skyblue'}}>
+            <div style={{marginTop: 300, marginLeft: 300, width: 300, height: 300, background: 'skyblue'}}>
                 HI THERE
                 <button onClick={() => ov.close()}>CLOSE</button>
             </div>
@@ -22,7 +22,7 @@ const Template: React.FC = () => {
     return (
         <div>
             <OverlayRoot/>
-            <button onClick={onClick}>HI</button>
+            <button onClick={overlay.opener}>HI</button>
         </div>
     );
 };

@@ -37,12 +37,13 @@ export class Overlay {
     }
 
     readonly opener = () => {
-        if (this.opened) {
-            this.open();
-        } else {
-            this.close();
-        }
+        this.toggle();
     };
+
+    toggle() {
+        if (this.opened) this.close();
+        else this.open();
+    }
 
     open() {
         this._opened = true;
