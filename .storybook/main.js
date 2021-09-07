@@ -1,9 +1,23 @@
 module.exports = {
-  "stories": [
+  typescript: {
+    check: false
+  },
+  core: {
+    builder: "webpack5",
+  },
+  stories: [
     "../stories/**/*.stories.mdx",
     "../stories/**/*.stories.@(js|jsx|ts|tsx)"
   ],
-  "addons": [
+  addons: [
+    {
+      name: '@storybook/preset-scss',
+      options: {
+        cssLoaderOptions: {
+          modules: true
+        },
+      }
+    },
     "@storybook/addon-links",
     "@storybook/addon-essentials"
   ]
