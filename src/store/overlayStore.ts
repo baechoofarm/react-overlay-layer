@@ -18,6 +18,7 @@ export class OverlayStore {
     }
 
     remove(id: OverlayId) {
+        this.overlays.get(id)?.close();
         this.overlays.delete(id);
     }
 
@@ -34,10 +35,8 @@ export class OverlayStore {
         const fast: Overlay[] = [];
         const late: Overlay[] = [];
 
-        console.log(this.overlays);
-
         this.overlays.forEach(overlay => {
-            switch (overlay.option.order) {
+            switch (overlay.order) {
                 case OverlayRenderOrder.FAST:
                     fast.push(overlay);
                     break;

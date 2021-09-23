@@ -1,8 +1,8 @@
-import React, {useCallback} from "react";
+import React from "react";
 import {OverlayRoot, useOverlay} from "../src/internal";
 
 export default {
-    title: 'Sample/Overlay'
+    title: 'Overlay/Basic'
 };
 
 const Template: React.FC = () => {
@@ -14,10 +14,6 @@ const Template: React.FC = () => {
             </div>
         );
     });
-
-    function onClick() {
-        overlay.open();
-    }
 
     return (
         <div>

@@ -7,10 +7,10 @@ interface Props {
 }
 
 const OverlayLayer: React.FC<Props> = observer(({overlay}) => {
-    const {option, renderer} = overlay;
+    const {renderer, dim} = overlay;
 
     return (
-        <div className={`overlay-layer ${option.dim ? 'dim' : ''}`}>
+        <div className={`overlay-layer ${dim ? 'dim' : ''}`}>
             {renderer(overlay) ?? null}
         </div>
     );

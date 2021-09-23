@@ -1,13 +1,13 @@
 import React from "react";
 import {observer} from "mobx-react-lite";
-import {OverlayLayer, useOverlayItems} from "../internal";
+import {OverlayLayer, OverlayStore} from "../internal";
 
 interface Props {
     id?: string;
 }
 
 const OverlayRoot: React.FC<Props> = observer(({id}) => {
-    const items = useOverlayItems();
+    const items = OverlayStore.instance.openedItems;
 
     return (
         <div

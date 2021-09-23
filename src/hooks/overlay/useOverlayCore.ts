@@ -1,8 +1,8 @@
-import {useCallback, useEffect, useMemo, useState} from "react";
-import {Overlay, OverlayOption, OverlayRenderer, OverlayStore} from "../internal";
+import {useEffect, useState} from "react";
+import {Overlay, OverlayRenderer} from "../../model/overlay/overlay";
+import {OverlayStore} from "../../store/overlayStore";
 
-export function useOverlay(renderer: OverlayRenderer, initialOption?: OverlayOption) {
-    const [overlay] = useState(() => new Overlay(renderer, initialOption));
+export function useOverlayCore(overlay: Overlay, renderer: OverlayRenderer) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -20,5 +20,5 @@ export function useOverlay(renderer: OverlayRenderer, initialOption?: OverlayOpt
         }
     }, [mounted, overlay, renderer]);
 
-    return overlay;
+    return {mounted};
 }

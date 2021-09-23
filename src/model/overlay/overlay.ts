@@ -1,11 +1,11 @@
-import {action, computed, makeObservable, observable, runInAction} from "mobx";
+import {action, computed, makeObservable, observable, override, runInAction} from "mobx";
 import {ReactNode} from "react";
-import {OverlayOption, OverlayRenderOrder, OverlayStore} from "../internal";
+import {OverlayOption, OverlayRenderOrder, OverlayStore} from "../../internal";
 
 export type OverlayId = symbol;
-export type OverlayRenderer = (overlay: Overlay) => ReactNode;
+export type OverlayRenderer<T extends Overlay = Overlay> = (overlay: T) => ReactNode;
 
-function defaultOption(option?: OverlayOption) {
+export function defaultOverlayOption(option?: OverlayOption) {
     return {
         order: option?.order ?? OverlayRenderOrder.NORMAL,
         dim: option?.dim ?? false
@@ -19,18 +19,24 @@ export class Overlay {
 
     _opened = false
     _renderer: OverlayRenderer;
-    _option: OverlayOption;
 
-    constructor(renderer: OverlayRenderer, option: OverlayOption = defaultOption()) {
+    order: OverlayRenderOrder;
+    dim: boolean;
+
+    constructor(renderer: OverlayRenderer, option?: OverlayOption) {
+        const opt = defaultOverlayOption(option);
+
+        this.order = opt.order;
+        this.dim = opt.dim;
+
         this._renderer = renderer;
-        this._option = option;
 
         makeObservable(this, {
             _opened: observable,
             _renderer: observable,
-            _option: observable,
+            order: observable,
+            dim: observable,
             renderer: computed,
-            option: computed,
             open: action,
             close: action
         });
@@ -71,11 +77,19 @@ export class Overlay {
         });
     }
 
-    get option() {
-        return defaultOption(this._option);
-    }
-
     get opened() {
         return this._opened;
+    }
+
+    getOverriddenObservable() {
+        return {
+            _opened: override,
+            _renderer: override,
+            order: override,
+            dim: override,
+            renderer: override,
+            open: override,
+            close: override
+        };
     }
 }
