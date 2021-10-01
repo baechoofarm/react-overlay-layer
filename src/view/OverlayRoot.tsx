@@ -40,7 +40,7 @@ export function initializeOverlayGlobalRoot(container: Container, props: Omit<Ov
     ReactDOM.render(
         <OverlayRoot
             {...props}
-            store={OverlayStore.getRootStore()}
+            store={OverlayStore.getGlobalStore()}
         />,
         container
     );

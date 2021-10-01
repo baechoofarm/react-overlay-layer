@@ -56,12 +56,12 @@ export class OverlayStore {
         return this.items.filter(v => v?.opened);
     }
 
-    private static rootStore: OverlayStore;
+    private static global: OverlayStore;
 
-    static getRootStore() {
-        if (!this.rootStore) this.rootStore = new OverlayStore();
-        return this.rootStore;
+    static getGlobalStore() {
+        if (!this.global) this.global = new OverlayStore();
+        return this.global;
     }
 }
 
-export const OverlayStoreContext = React.createContext<OverlayStore>(OverlayStore.getRootStore());
+export const OverlayStoreContext = React.createContext<OverlayStore>(OverlayStore.getGlobalStore());
