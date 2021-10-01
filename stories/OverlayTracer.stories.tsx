@@ -1,5 +1,5 @@
 import React from "react";
-import {OverlayRoot, useTracerOverlayWithTracer} from "../src/main";
+import {useTracerOverlayWithTracer} from "../src/main";
 
 export default {
     title: 'Overlay/OverlayTracer'
@@ -33,7 +33,6 @@ const Template: React.FC = () => {
             >
                 Open
             </button>
-            <OverlayRoot/>
         </div>
     );
 };

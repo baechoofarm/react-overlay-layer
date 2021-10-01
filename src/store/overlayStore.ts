@@ -1,10 +1,11 @@
+import React from "react";
 import {action, computed, makeObservable, observable} from "mobx";
 import {Overlay, OverlayId, OverlayRenderOrder} from "../internal";
 
 export class OverlayStore {
     private readonly overlays = observable.map<OverlayId, Overlay>();
 
-    private constructor() {
+    constructor() {
         makeObservable(this, {
             register: action,
             remove: action,
@@ -55,10 +56,12 @@ export class OverlayStore {
         return this.items.filter(v => v?.opened);
     }
 
-    private static _instance: OverlayStore;
+    private static rootStore: OverlayStore;
 
-    static get instance() {
-        if (!this._instance) this._instance = new OverlayStore();
-        return this._instance;
+    static getRootStore() {
+        if (!this.rootStore) this.rootStore = new OverlayStore();
+        return this.rootStore;
     }
 }
+
+export const OverlayStoreContext = React.createContext<OverlayStore>(OverlayStore.getRootStore());

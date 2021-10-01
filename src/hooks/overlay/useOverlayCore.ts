@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
-import {Overlay, OverlayRenderer} from "../../model/overlay/overlay";
-import {OverlayStore} from "../../store/overlayStore";
+import {useContext, useEffect, useState} from "react";
+import {Overlay, OverlayRenderer, OverlayStoreContext} from "../../internal";
 
 export function useOverlayCore(overlay: Overlay, renderer: OverlayRenderer) {
+    const store = useContext(OverlayStoreContext);
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -10,9 +10,9 @@ export function useOverlayCore(overlay: Overlay, renderer: OverlayRenderer) {
     }, []);
 
     useEffect(() => {
-        OverlayStore.instance.register(overlay);
+        store.register(overlay);
         return () => overlay.remove();
-    }, [overlay]);
+    }, [overlay, store]);
 
     useEffect(() => {
         if (mounted) {

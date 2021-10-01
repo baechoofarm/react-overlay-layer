@@ -1,11 +1,12 @@
 import React from "react";
-import {OverlayRoot, useOverlay} from "../src/internal";
+import {useOverlay} from "../src/main";
 
 export default {
     title: 'Overlay/Basic'
 };
 
 const Template: React.FC = () => {
+
     const overlay = useOverlay(ov => {
         return (
             <div style={{marginTop: 300, marginLeft: 300, width: 300, height: 300, background: 'skyblue'}}>
@@ -17,7 +18,6 @@ const Template: React.FC = () => {
 
     return (
         <div>
-            <OverlayRoot/>
             <button onClick={overlay.opener}>HI</button>
         </div>
     );
