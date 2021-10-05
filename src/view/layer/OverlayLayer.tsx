@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react-lite";
-import {Overlay} from "../../internal";
+import {Overlay, OverlayContext} from "../../internal";
 
 interface Props {
     overlay: Overlay;
@@ -11,7 +11,9 @@ const OverlayLayer: React.FC<Props> = observer(({overlay}) => {
 
     return (
         <div className={`overlay-layer ${dim ? 'dim' : ''}`}>
-            {renderer(overlay) ?? null}
+            <OverlayContext.Provider value={overlay}>
+                {renderer(overlay) ?? null}
+            </OverlayContext.Provider>
         </div>
     );
 });

@@ -1,8 +1,8 @@
-import {useContext, useEffect, useState} from "react";
-import {Overlay, OverlayRenderer, OverlayStoreContext} from "../../internal";
+import {useEffect, useState} from "react";
+import {Overlay, OverlayRenderer, OverlayStore} from "../../internal";
 
 export function useOverlayCore(overlay: Overlay, renderer: OverlayRenderer) {
-    const store = useContext(OverlayStoreContext);
+    const store = OverlayStore.getGlobalStore();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {

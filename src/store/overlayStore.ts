@@ -1,11 +1,10 @@
-import React from "react";
 import {action, computed, makeObservable, observable} from "mobx";
 import {Overlay, OverlayId, OverlayRenderOrder} from "../internal";
 
 export class OverlayStore {
     private readonly overlays = observable.map<OverlayId, Overlay>();
 
-    constructor() {
+    private constructor() {
         makeObservable(this, {
             register: action,
             remove: action,
@@ -63,5 +62,3 @@ export class OverlayStore {
         return this.global;
     }
 }
-
-export const OverlayStoreContext = React.createContext<OverlayStore>(OverlayStore.getGlobalStore());

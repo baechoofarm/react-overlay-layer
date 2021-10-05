@@ -1,5 +1,5 @@
 import {action, computed, makeObservable, observable, override, runInAction} from "mobx";
-import {ReactNode} from "react";
+import React, {ReactNode} from "react";
 import {OverlayOption, OverlayRenderOrder, OverlayStore} from "../../internal";
 
 export type OverlayId = symbol;
@@ -60,7 +60,7 @@ export class Overlay {
     }
 
     remove() {
-        OverlayStore.instance.remove(this.id);
+        OverlayStore.getGlobalStore().remove(this.id);
     }
 
     updateRenderer(renderer: OverlayRenderer) {
@@ -93,3 +93,5 @@ export class Overlay {
         };
     }
 }
+
+export const OverlayContext = React.createContext({} as Overlay);
