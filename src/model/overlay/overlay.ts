@@ -2,7 +2,7 @@ import {action, computed, makeObservable, observable, override, runInAction} fro
 import React, {ReactNode} from "react";
 import {OverlayOption, OverlayRenderOrder, OverlayStore} from "../../internal";
 
-export type OverlayId = symbol;
+export type OverlayId = string;
 export type OverlayRenderer<T extends Overlay = Overlay> = (overlay: T) => ReactNode;
 
 export function defaultOverlayOption(option?: OverlayOption) {
@@ -15,7 +15,7 @@ export function defaultOverlayOption(option?: OverlayOption) {
 let idx = 1;
 
 export class Overlay {
-    readonly id: OverlayId = Symbol(`Overlay-${idx++}`);
+    readonly id: OverlayId = `overlay-${idx++}`;
 
     _opened = false
     _renderer: OverlayRenderer;

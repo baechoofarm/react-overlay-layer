@@ -6,11 +6,14 @@ interface Props {
     overlay: Overlay;
 }
 
-const OverlayLayer: React.FC<Props> = observer(({overlay}) => {
+const OverlayLayer = observer<Props>(({overlay}) => {
     const {renderer, dim} = overlay;
 
     return (
-        <div className={`overlay-layer ${dim ? 'dim' : ''}`}>
+        <div
+            className={`rol-overlay-layer ${dim ? 'dim' : ''}`}
+            data-overlay-id={overlay.id}
+        >
             <OverlayContext.Provider value={overlay}>
                 {renderer(overlay) ?? null}
             </OverlayContext.Provider>

@@ -9,7 +9,8 @@ export class OverlayStore {
             register: action,
             remove: action,
             items: computed,
-            openedItems: computed
+            openedItems: computed,
+            lastOpenedItemId: computed
         });
     }
 
@@ -28,6 +29,10 @@ export class OverlayStore {
 
     close(id: OverlayId) {
         this.overlays.get(id)?.close();
+    }
+
+    getItem(id: OverlayId) {
+        return this.items?.find(v => v.id === id) ?? null;
     }
 
     get items() {
@@ -53,6 +58,10 @@ export class OverlayStore {
 
     get openedItems() {
         return this.items.filter(v => v?.opened);
+    }
+
+    get lastOpenedItemId() {
+        return this.openedItems[this.openedItems.length - 1]?.id ?? null;
     }
 
     private static global: OverlayStore;
