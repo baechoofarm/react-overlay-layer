@@ -8,7 +8,8 @@ export type OverlayRenderer<T extends Overlay = Overlay> = (overlay: T) => React
 export function defaultOverlayOption(option?: OverlayOption) {
     return {
         order: option?.order ?? OverlayRenderOrder.NORMAL,
-        dim: option?.dim ?? false
+        dim: option?.dim ?? false,
+        onCloseOutside: option?.onClickOutside ?? (() => true)
     };
 }
 
@@ -22,12 +23,14 @@ export class Overlay {
 
     order: OverlayRenderOrder;
     dim: boolean;
+    onCloseOutside: (overlay: Overlay) => boolean;
 
     constructor(renderer: OverlayRenderer, option?: OverlayOption) {
         const opt = defaultOverlayOption(option);
 
         this.order = opt.order;
         this.dim = opt.dim;
+        this.onCloseOutside = opt.onCloseOutside;
 
         this._renderer = renderer;
 

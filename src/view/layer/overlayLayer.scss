@@ -5,4 +5,9 @@
   height: 0;
   position: fixed;
   z-index: 9999;
+
+  &.dim {
+    height: 100%;
+    background: rgba(0, 0, 0, .3);
+  }
 }

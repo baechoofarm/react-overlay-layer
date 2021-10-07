@@ -1,3 +1,5 @@
+import {Overlay} from "../../internal";
+
 export enum OverlayRenderOrder {
     NORMAL = 'NORMAL',
     FAST = 'FAST',
@@ -7,4 +9,5 @@ export enum OverlayRenderOrder {
 export interface OverlayOption {
     order?: OverlayRenderOrder;
     dim?: boolean;
+    onClickOutside?: (overlay: Overlay) => boolean;
 }
