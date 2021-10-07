@@ -1,0 +1,47 @@
+name: deploy Storybook on github pages
+
+on:
+  push:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+          token: ${{secrets.GITHUB_TOKEN}}
+    
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: git merge master
+        run: git branch -r; git reset --hard origin/master
+      
+      - name: npm install
+        run: npm install
+      
+      - name: build storybook and move to project root
+        run : npm run build-storybook;dir;mv ./storybook-static ../docs
+        
+      - name: delete all files except docs and .git
+        run : mv ./.git ../.git;sudo rm -rf *
+        
+      - name: move docs and .git
+        run : mv ../docs ./docs;mv ../.git ./.git;dir -a
+        
+      - name: deploy storybook on github pages
+        uses: EndBug/add-and-commit@v7
+        with:
+          branch: gh-pages
+          default_author: github_actions
+          message: deploy storybook to github pages
+          pull_strategy: 'NO-PULL'
+          push: origin gh-pages --force
