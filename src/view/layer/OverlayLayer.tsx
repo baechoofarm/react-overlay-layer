@@ -1,6 +1,7 @@
 import React from "react";
 import {observer} from "mobx-react-lite";
 import {Overlay, OverlayContext} from "../../internal";
+import "./overlayLayer.scss";
 
 interface Props {
     overlay: Overlay;
