@@ -121,7 +121,7 @@ function configure(env, target) {
                     file: pkg.main,
                     format: 'cjs',
                     exports: 'named',
-                    sourcemap: true,
+                    sourcemap: false,
                 },
             ],
             // We need to explicitly state which modules are external, meaning that
@@ -142,7 +142,7 @@ function configure(env, target) {
                 {
                     file: pkg.module,
                     format: 'es',
-                    sourcemap: true,
+                    sourcemap: false,
                 },
             ],
             // We need to explicitly state which modules are external, meaning that
